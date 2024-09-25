@@ -14,10 +14,6 @@ app.use(express.json());
 require('dotenv').config();
 
 
-// user : artsNcrafts
-// pass : 4fbYva21MuZVwwoA
-
-
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ddujh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -36,19 +32,19 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
    
-    await client.connect();
+    // await client.connect();
 
     const craftsCollection = client.db('craftDB').collection('crafts')
 
 
 // for getting the data
     app.get('/crafts', async(req , res) => {
-        const cursor = craftsCollection.find() // 'cursor' একটা পয়েন্টার যেটা পয়েন্ট করবে ডাটাবেজের কালেকশন (coffee) কে আর সেখানে find() মেথড দিয়ে সব ডাটা find করে তা toArray() তে convert করবে ও শেষে একটি রেসপন্স দিবে
+        const cursor = craftsCollection.find()
     
         const result = await cursor.toArray();
         res.send(result)
         
-    // এখন http://localhost:5000/crafts তে সব গুলো ডাটা শো করবে array  হিসাবে
+   
         })
 
 
@@ -122,17 +118,7 @@ async function run() {
   
       })
       
-      
-
-
-
-
-
-
-
-
-
-
+    
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -146,11 +132,6 @@ run().catch(console.dir);
 
 
 
-
-
-
-
-
 app.get('/',async (req,res)=>{
     res.send('server done')
 })
@@ -160,3 +141,6 @@ app.get('/',async (req,res)=>{
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`);
 })
+
+
+
